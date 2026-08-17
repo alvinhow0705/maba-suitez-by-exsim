@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_MY">
 <meta property="og:url" content="https://maba-suitez-by-exsim.com/">
 <meta property="og:site_name" content="MABA Suitez by EXSIM">
-<meta property="og:image" content="https://maba-suitez-by-exsim.com/assets/images/maba.jpg">
+<meta property="og:image" content="https://maba-suitez-by-exsim.com/assets/images/maba-hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MABA Suitez by EXSIM — Opposite Merdeka 118, Kuala Lumpur">
 <meta name="twitter:description" content="New serviced residences at the foot of Malaysia's tallest tower. Indicative pricing from RM720,000.">
@@ -29,7 +29,7 @@
 <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Residence","name":"MABA Suitez","description":"New serviced residences by EXSIM, directly opposite Merdeka 118, Kuala Lumpur. Studio, 1+1 and 2-bedroom suites.","image":"https://maba-suitez-by-exsim.com/assets/images/maba.jpg","url":"https://maba-suitez-by-exsim.com/","address":{"@type":"PostalAddress","addressLocality":"Kuala Lumpur","addressRegion":"Kuala Lumpur","addressCountry":"MY"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Residence","name":"MABA Suitez","description":"New serviced residences by EXSIM, directly opposite Merdeka 118, Kuala Lumpur. Studio, 1+1 and 2-bedroom suites.","image":"https://maba-suitez-by-exsim.com/assets/images/maba-hero.jpg","url":"https://maba-suitez-by-exsim.com/","address":{"@type":"PostalAddress","addressLocality":"Kuala Lumpur","addressRegion":"Kuala Lumpur","addressCountry":"MY"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Where is MABA Suitez located?","acceptedAnswer":{"@type":"Answer","text":"MABA Suitez by EXSIM sits in the heart of Kuala Lumpur, directly opposite Merdeka 118 — the tallest tower in Malaysia and the second tallest in the world. It is roughly 50m from Merdeka 118, 118 Mall and Merdeka Stadium, around 500m from Merdeka MRT (SBK17) and about 800m from Lalaport."}},{"@type":"Question","name":"Who is the developer of MABA Suitez?","acceptedAnswer":{"@type":"Answer","text":"MABA Suitez is a collaboration between MABA and EXSIM, part of the EXSIM Group of Companies — one of Malaysia's most recognised developers, with honours including the FIABCI World Prix d'Excellence, Malaysia Property Award, PAM, MLAA and EdgeProp awards."}},{"@type":"Question","name":"How much does MABA Suitez cost?","acceptedAnswer":{"@type":"Answer","text":"Indicative pricing starts from RM720,000, subject to change. Final pricing is confirmed by the developer closer to launch — register your interest to receive figures as they are released."}},{"@type":"Question","name":"What unit types are available at MABA Suitez?","acceptedAnswer":{"@type":"Answer","text":"MABA Suitez is a serviced-residence development offering studio, 1+1 bedroom and 2-bedroom suites, suitable for both own-stay and investment. Final unit mix and sizes are subject to developer confirmation."}}]}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -62,8 +62,14 @@ nav.solid{background:rgba(7,11,20,.92);backdrop-filter:blur(12px);border-bottom:
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:-6%;background-size:cover;background-position:center;will-change:transform;animation:slowZoom 22s ease-out forwards}
-@keyframes slowZoom{from{transform:scale(1.1)}to{transform:scale(1)}}
+/* The drift never stops — it eases in and out forever, so the hero is always
+   alive without ever snapping back to a start position. */
+.hero-bg{position:absolute;inset:-8%;background-size:cover;background-position:center 38%;will-change:transform;animation:heroDrift 38s ease-in-out infinite alternate;transform-origin:50% 40%}
+@keyframes heroDrift{
+  from{transform:scale(1.06) translate3d(0,0,0)}
+  to  {transform:scale(1.16) translate3d(-1.2%,-1.6%,0)}
+}
+@media(prefers-reduced-motion:reduce){.hero-bg{animation:none;transform:scale(1.06)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.6) 0%,rgba(7,11,20,.12) 36%,rgba(7,11,20,.95) 100%)}
 .hero-inner{position:relative;z-index:3;width:100%;max-width:1180px;margin:0 auto;padding:0 26px 84px}
 .h-eyebrow{font-size:11px;letter-spacing:.4em;text-indent:.4em;text-transform:uppercase;color:var(--silver);margin-bottom:20px}
@@ -111,6 +117,9 @@ section.blk{padding:104px 0}
 /* band */
 .band{position:relative;min-height:76vh;display:flex;align-items:center;justify-content:center;text-align:center;background-size:cover;background-position:center}
 .band::after{content:"";position:absolute;inset:0;background:rgba(7,11,20,.58)}
+.band-type{min-height:60vh;background:radial-gradient(120% 90% at 50% 0%,#16203a 0%,#0b1120 48%,#070b14 100%);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band-type::after{display:none}
+.band-type .cap .lede{max-width:56ch;color:#b6c0d2}
 .band .cap{position:relative;z-index:2;padding:0 26px;max-width:900px}
 .band .cap h2{font-size:clamp(26px,5vw,54px);margin:0 auto;max-width:none}
 
@@ -223,7 +232,7 @@ footer a:hover{color:var(--gold)}
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-bg" style="background-image:url('assets/images/maba.jpg')"></div>
+  <div class="hero-bg" style="background-image:url('assets/images/maba-hero.jpg')"></div>
   <div class="hero-inner">
     <div class="h-eyebrow">New Serviced Residences &middot; Kuala Lumpur</div>
     <h1>Incredible views of <em>Merdeka 118.</em></h1>
@@ -260,12 +269,16 @@ footer a:hover{color:var(--gold)}
       </div>
       <div style="margin-top:28px"><a class="btn btn-ghost" href="#" data-wa="Hi, can you share more details and updates on MABA Suitez by EXSIM?">Ask About the Project</a></div>
     </div>
-    <div class="shot reveal"><img src="assets/images/maba-1.png" alt="Merdeka 118 rising above a sea of clouds, Kuala Lumpur" loading="lazy"></div>
+    <div class="shot reveal"><img src="assets/images/maba-2.png" alt="Merdeka 118 and the Kuala Lumpur skyline" loading="lazy"></div>
   </div>
 </section>
 
-<section class="band" style="background-image:url('assets/images/maba-2.png')">
-  <div class="cap reveal"><div class="tag">City Living, Elevated</div><h2>A skyline that <em>never dims.</em></h2></div>
+<!-- Typographic band rather than a photo one: the available artwork is too low
+     resolution to hold a full-bleed section without going soft. Swap in a
+     background-image here once a wide, high-resolution shot is available. -->
+<section class="band band-type">
+  <div class="cap reveal"><div class="tag">City Living, Elevated</div><h2>A skyline that <em>never dims.</em></h2>
+  <p class="lede" style="margin:22px auto 0;text-align:center">Merdeka 118 stands 678.9 m above the city &mdash; the tallest tower in Malaysia, and the second tallest on Earth. This is the view you wake up to.</p></div>
 </section>
 
 <section class="blk" id="location">
@@ -318,7 +331,7 @@ footer a:hover{color:var(--gold)}
 
 <section class="blk" id="lifestyle">
   <div class="wrap two">
-    <div class="shot reveal" style="order:2"><img src="assets/images/maba.jpg" alt="118 Mall and the Merdeka 118 precinct, Kuala Lumpur" loading="lazy"></div>
+    <div class="shot reveal" style="order:2"><img src="assets/images/maba-hero.jpg" alt="118 Mall and the Merdeka 118 precinct, Kuala Lumpur" loading="lazy"></div>
     <div class="reveal" style="order:1">
       <div class="tag">The Lifestyle</div>
       <h2>Everything, at your doorstep.</h2>
