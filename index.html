@@ -482,6 +482,17 @@ footer a:hover{color:var(--gold)}
 </div>
 
 <script>
+/* ============================================================
+   IMAGE SLOTS — drop a file into assets/images/, put the path
+   here, and that part of the page appears on its own. Leave a
+   slot empty and the page simply skips it, so nothing ever
+   renders as a broken image.
+   ============================================================ */
+var SLOTS = {
+  jv:   "",   /* MABA x EXSIM signing photo  -> "assets/images/maba-exsim-jv.jpg" */
+  band: ""    /* wide KL night skyline       -> "assets/images/kl-night.jpg"      */
+};
+
 /* ---------- project constants ---------- */
 var PROJECT = "MABA Suitez by EXSIM";
 var WA      = "60176015957";
@@ -556,6 +567,22 @@ document.querySelectorAll('[data-wa]').forEach(function(el){
     y = window.scrollY;
     if(!ticking){ ticking = true; requestAnimationFrame(function(){ if(y < window.innerHeight) par.style.transform = 'translate3d(0,' + (y * 0.15) + 'px,0)'; ticking = false; }); }
   }, {passive:true});
+})();
+
+/* ---------- optional imagery, shown only once a slot is filled ---------- */
+(function(){
+  if(SLOTS.jv){
+    document.getElementById('jvShot').innerHTML =
+      '<img src="' + SLOTS.jv + '" alt="MABA and EXSIM joint-venture signing ceremony" loading="lazy">' +
+      '<div class="cap">MABA &times; EXSIM joint-venture signing</div>';
+  }
+  if(SLOTS.band){
+    var b = document.querySelector('.band-type');
+    if(b){
+      b.classList.remove('band-type');
+      b.style.backgroundImage = "url('" + SLOTS.band + "')";
+    }
+  }
 })();
 
 /* ---------- FAQ accordion ---------- */
