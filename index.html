@@ -64,6 +64,7 @@ nav.solid{background:rgba(7,11,20,.92);backdrop-filter:blur(12px);border-bottom:
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
 /* The drift never stops — it eases in and out forever, so the hero is always
    alive without ever snapping back to a start position. */
+.hero-par{position:absolute;inset:0;will-change:transform}
 .hero-bg{position:absolute;inset:-8%;background-size:cover;background-position:center 38%;will-change:transform;animation:heroDrift 38s ease-in-out infinite alternate;transform-origin:50% 40%}
 @keyframes heroDrift{
   from{transform:scale(1.06) translate3d(0,0,0)}
@@ -72,6 +73,23 @@ nav.solid{background:rgba(7,11,20,.92);backdrop-filter:blur(12px);border-bottom:
 @media(prefers-reduced-motion:reduce){.hero-bg{animation:none;transform:scale(1.06)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.6) 0%,rgba(7,11,20,.12) 36%,rgba(7,11,20,.95) 100%)}
 .hero-inner{position:relative;z-index:3;width:100%;max-width:1180px;margin:0 auto;padding:0 26px 84px}
+/* Entrance: each line lifts up from below once the loader clears, one after
+   another, rather than the whole block appearing at once. */
+.hero-inner > *{opacity:0;transform:translateY(38px);transition:opacity 1.1s cubic-bezier(.16,.8,.3,1),transform 1.1s cubic-bezier(.16,.8,.3,1)}
+body.ready .hero-inner > *{opacity:1;transform:none}
+body.ready .hero-inner > *:nth-child(1){transition-delay:.05s}
+body.ready .hero-inner > *:nth-child(2){transition-delay:.22s}
+body.ready .hero-inner > *:nth-child(3){transition-delay:.40s}
+body.ready .hero-inner > *:nth-child(4){transition-delay:.56s}
+body.ready .hero-inner > *:nth-child(5){transition-delay:.70s}
+.scroll-cue{opacity:0;transition:opacity 1s ease .95s}
+body.ready .scroll-cue{opacity:1}
+/* the background settles in at the same time */
+.hero-bg{opacity:0;transition:opacity 1.4s ease}
+body.ready .hero-bg{opacity:1}
+@media(prefers-reduced-motion:reduce){
+  .hero-inner > *,.scroll-cue,.hero-bg{opacity:1;transform:none;transition:none}
+}
 .h-eyebrow{font-size:11px;letter-spacing:.4em;text-indent:.4em;text-transform:uppercase;color:var(--silver);margin-bottom:20px}
 .hero h1{font-size:clamp(34px,6.4vw,74px);max-width:15ch}
 .hero h1 em{font-style:italic;color:var(--gold)}
@@ -232,7 +250,10 @@ footer a:hover{color:var(--gold)}
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-bg" style="background-image:url('assets/images/maba-hero.jpg')"></div>
+  <!-- Two layers on purpose: the outer one is moved by the scroll parallax,
+       the inner one runs the endless drift. Sharing one element would mean the
+       inline transform from the parallax wipes out the CSS animation. -->
+  <div class="hero-par"><div class="hero-bg" style="background-image:url('assets/images/maba-hero.jpg')"></div></div>
   <div class="hero-inner">
     <div class="h-eyebrow">New Serviced Residences &middot; Kuala Lumpur</div>
     <h1>Incredible views of <em>Merdeka 118.</em></h1>
@@ -469,9 +490,14 @@ document.querySelectorAll('[data-wa]').forEach(function(el){
 
 /* ---------- loader ---------- */
 (function(){
-  var l = document.getElementById('loader');
-  function hide(){ l.classList.add('gone'); }
-  window.addEventListener('load', function(){ setTimeout(hide, 550); });
+  var l = document.getElementById('loader'), fired = false;
+  function hide(){
+    if(fired) return; fired = true;
+    l.classList.add('gone');
+    /* one frame later so the browser has the starting state to animate from */
+    requestAnimationFrame(function(){ document.body.classList.add('ready'); });
+  }
+  window.addEventListener('load', function(){ setTimeout(hide, 450); });
   setTimeout(hide, 3000); /* fallback so the loader can never trap a visitor */
 })();
 
@@ -501,11 +527,12 @@ document.querySelectorAll('[data-wa]').forEach(function(el){
 
 /* ---------- hero parallax ---------- */
 (function(){
-  var bg = document.querySelector('.hero-bg'); if(!bg) return;
+  var par = document.querySelector('.hero-par'); if(!par) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   var y = 0, ticking = false;
   window.addEventListener('scroll', function(){
     y = window.scrollY;
-    if(!ticking){ ticking = true; requestAnimationFrame(function(){ if(y < window.innerHeight) bg.style.transform = 'translateY(' + (y * 0.15) + 'px)'; ticking = false; }); }
+    if(!ticking){ ticking = true; requestAnimationFrame(function(){ if(y < window.innerHeight) par.style.transform = 'translate3d(0,' + (y * 0.15) + 'px,0)'; ticking = false; }); }
   }, {passive:true});
 })();
 
