@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maba-suitez-by-exsim.com/sitemap.xml
