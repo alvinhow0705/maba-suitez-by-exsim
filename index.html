@@ -160,9 +160,23 @@ section.blk{padding:104px 0}
 .unit .u-btn{margin-top:24px;align-self:flex-start;background:transparent;border:1px solid rgba(233,237,245,.28);color:var(--txt);border-radius:8px;padding:11px 20px;font-family:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:.25s}
 .unit .u-btn:hover{background:#25D366;border-color:#25D366;color:#04240f}
 
+/* MABA x EXSIM — centred, then a full-width banner, then the awards row.
+   Deliberately a different composition from the usual image-left/text-right. */
+.jv-head{text-align:center;max-width:760px;margin:0 auto}
+.jv-head h2{max-width:none;margin:0 auto;font-size:clamp(34px,6vw,68px);letter-spacing:.01em}
+.jv-head h2 .x{color:var(--gold);font-size:.72em;vertical-align:.06em;margin:0 .12em}
+.jv-rule{width:60px;height:1px;background:var(--gold);margin:26px auto;opacity:.75}
+.jv-head .lede{margin:0 auto;text-align:center}
+.jv-shot{margin-top:52px;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.55)}
+.jv-shot:empty{display:none}
+.jv-shot img{width:100%;aspect-ratio:21/9;object-fit:cover;object-position:center 42%;transition:transform .9s ease}
+.jv-shot:hover img{transform:scale(1.03)}
+.jv-shot .cap{position:absolute;left:0;right:0;bottom:0;padding:44px 28px 22px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#cfd8e6;background:linear-gradient(180deg,transparent,rgba(7,11,20,.86))}
+
 /* awards */
-.awards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:36px}
-.award{border:1px solid var(--line);border-radius:10px;padding:20px 16px;text-align:center;font-size:12px;letter-spacing:.08em;color:#b6c0d2;line-height:1.6}
+.awards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:44px}
+.award{border:1px solid var(--line);border-radius:10px;padding:20px 16px;text-align:center;font-size:12px;letter-spacing:.08em;color:#b6c0d2;line-height:1.6;transition:.3s}
+.award:hover{border-color:rgba(201,168,105,.45);color:var(--silver)}
 
 /* faq */
 .faq{max-width:860px;margin:42px auto 0}
@@ -367,11 +381,17 @@ footer a:hover{color:var(--gold)}
 
 <section class="blk" id="developer" style="background:var(--bg2);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="reveal">
-      <div class="tag">A Landmark Collaboration</div>
-      <h2>MABA <em>&times;</em> EXSIM.</h2>
+    <div class="reveal jv-head">
+      <div class="tag" style="text-indent:0">A Landmark Collaboration</div>
+      <h2>MABA <span class="x">&times;</span> EXSIM.</h2>
+      <div class="jv-rule"></div>
       <p class="lede">MABA Suitez is brought to life through a collaboration between MABA and EXSIM &mdash; part of the EXSIM Group of Companies, one of Malaysia's most recognised and award-winning developers. Project details are subject to developer confirmation.</p>
     </div>
+
+    <!-- Wide banner rather than the usual side-by-side crop: fill SLOTS.jv with
+         the signing-ceremony photo and it appears here. -->
+    <div class="jv-shot reveal" id="jvShot"></div>
+
     <div class="awards reveal">
       <div class="award">FIABCI World<br>Prix d'Excellence</div>
       <div class="award">Malaysia<br>Property Award</div>
